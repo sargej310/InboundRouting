@@ -15,6 +15,19 @@ select { padding: 5px; }
 
 <h1>Inbound Routing Guide</h1>
 
+<!-- Company Dropdown -->
+<label for="company">Select Company:</label>
+<select id="company">
+  <option value="">-- Select Company --</option>
+  <option value="Climate Master – 7300 SW 44TH ST, Oklahoma City, OK 73179-4307">Climate Master</option>
+  <option value="Intl Environmental – 4925 SW 7TH ST, Oklahoma City, OK 73128-1221">Intl Environmental</option>
+  <option value="ClimateCraft Inc. – 1427 NW 3RD ST, Oklahoma City, OK 73106-5207">ClimateCraft Inc.</option>
+  <option value="KOAX Corp. – 510 N Indiana Ave, Oklahoma City, OK 73106-2607">KOAX Corp.</option>
+  <option value="Thermaclime Tech Inc. – 5000 SW 7TH ST, Oklahoma City, OK 73128">Thermaclime Tech Inc.</option>
+  <option value="Climacool – 7300 SW 44TH ST, Oklahoma City, OK 73179-4307">Climacool</option>
+</select>
+
+<!-- Mode Dropdown -->
 <label for="mode">Select Mode:</label>
 <select id="mode">
   <option value="">-- Select Mode --</option>
@@ -23,6 +36,7 @@ select { padding: 5px; }
   <option value="ftl">Full Truckload</option>
 </select>
 
+<!-- Origin Dropdown -->
 <label for="origin">Select Origin State:</label>
 <select id="origin">
   <option value="">-- Select Origin State --</option>
@@ -78,17 +92,25 @@ select { padding: 5px; }
   <option value="WY">Wyoming</option>
 </select>
 
-<p><strong>Inbound State:</strong> Oklahoma</p>
+<!-- Destination Address -->
+<p><strong>Destination:</strong> <span id="destinationAddress">Select a company…</span></p>
 
+<!-- Results -->
 <div id="results"></div>
 
 <script>
 function updateResults() {
+  const company = document.getElementById("company").value;
   const mode = document.getElementById("mode").value;
   const origin = document.getElementById("origin").value;
+  const addrSpan = document.getElementById("destinationAddress");
   const results = document.getElementById("results");
 
-  if (!mode || !origin) {
+  // Update destination address
+  addrSpan.textContent = company || "Select a company…";
+
+  // Require all selections
+  if (!company || !mode || !origin) {
     results.innerHTML = "";
     return;
   }
@@ -108,6 +130,7 @@ function updateResults() {
   }
 }
 
+document.getElementById("company").addEventListener("change", updateResults);
 document.getElementById("mode").addEventListener("change", updateResults);
 document.getElementById("origin").addEventListener("change", updateResults);
 </script>
