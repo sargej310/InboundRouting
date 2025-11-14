@@ -14,7 +14,6 @@ select { padding: 5px; }
 <body>
 <h1>Inbound Routing Guide</h1>
 
-
 <label for="mode">Select Mode:</label>
 <select id="mode">
 <option value="">-- Select Mode --</option>
@@ -22,7 +21,6 @@ select { padding: 5px; }
 <option value="ltl">LTL</option>
 <option value="ftl">Full Truckload</option>
 </select>
-
 
 <label for="origin">Select Origin State:</label>
 <select id="origin">
@@ -79,11 +77,47 @@ select { padding: 5px; }
 <option value="WY">Wyoming</option>
 </select>
 
-
 <p><strong>Inbound State:</strong> Oklahoma</p>
-
 
 <div id="results"></div>
 
+<script>
+  const modeSelect = document.getElementById('mode');
+  const originSelect = document.getElementById('origin');
+  const resultsDiv = document.getElementById('results');
 
+  function updateResults() {
+    const mode = modeSelect.value;
+    const origin = originSelect.value;
+
+    if (!mode || !origin) {
+      resultsDiv.innerHTML = '';
+      return;
+    }
+
+    let resultHTML = `<h3>Routing Instructions</h3>`;
+    resultHTML += `<p><strong>Origin State:</strong> ${origin}</p>`;
+    resultHTML += `<p><strong>Inbound State:</strong> Oklahoma</p>`;
+
+    if (mode === 'parcel') {
+      resultHTML += `<p><strong>Carrier Options:</strong></p>`;
+      resultHTML += `<ul>`;
+      resultHTML += `<li>FedEx — Account #: <em>[Enter FedEx Account Number]</em></li>`;
+      resultHTML += `<li>UPS — Account #: <em>[Enter UPS Account Number]</em></li>`;
+      resultHTML += `</ul>`;
+    }
+
+    if (mode === 'ltl' || mode === 'ftl') {
+      resultHTML += `<p><strong>Carrier:</strong> KODIS Transportation</p>`;
+      resultHTML += `<p><strong>KODIS Contact:</strong> <em>[Enter Contact Name, Phone, Email]</em></p>`;
+    }
+
+    resultsDiv.innerHTML = resultHTML;
+  }
+
+  modeSelect.addEventListener('change', updateResults);
+  originSelect.addEventListener('change', updateResults);
+</script>
+
+</body>
 </html>
